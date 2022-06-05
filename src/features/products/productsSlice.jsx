@@ -36,16 +36,30 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     filterBySearch: (state, action) => {
+      //Get the search input
       state.filters.search = action.payload;
+
+      //If empty (after backspacing)  - show all products
       if (action.payload === "") {
-        console.log("show og list");
         state.filters.showFiltered = false;
         return;
       }
+      //otherwise, filter productsList based on (Search Input vs Product Title)
       state.filters.filteredList = state.productsList.filter(product =>
         product.title.toUpperCase().includes(state.filters.search.toUpperCase())
       );
+      //Then show the filteredList
       state.filters.showFiltered = true;
+    },
+    switchLayout: (state, action) => {
+      let layoutOption = action.payload;
+      console.log("layoutOption", layoutOption);
+      if (layoutOption === "default") {
+        state.filters.defaultView = true;
+      }
+      if (layoutOption === "grid") {
+        state.filters.defaultView = false;
+      }
     },
   },
   extraReducers: {
@@ -62,7 +76,7 @@ const productsSlice = createSlice({
   },
 });
 
-export const { filterBySearch } = productsSlice.actions;
+export const { filterBySearch, switchLayout } = productsSlice.actions;
 
 export default productsSlice.reducer;
 

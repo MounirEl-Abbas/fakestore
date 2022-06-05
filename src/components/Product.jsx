@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Product = ({
   title,
@@ -8,8 +9,15 @@ const Product = ({
   image,
   rating: { rate, count },
 }) => {
+  const {
+    filters: { defaultView },
+  } = useSelector(store => store.products);
   return (
-    <article className="product-card" style={{ border: "1px solid red" }}>
+    <article
+      className={`${
+        defaultView ? "product-card default-layout" : "product-card grid-layout"
+      }`}
+      style={{ border: "1px solid red" }}>
       <h3>{title}</h3>
       <p>{price}</p>
       <p>{description}</p>

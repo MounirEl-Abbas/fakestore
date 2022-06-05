@@ -27,6 +27,15 @@ body {
   width: 200px;
 }
 
+.default-layout {
+  background-color: #5e5e5e;
+}
+
+.grid-layout {
+  width: 400px;
+  background-color: #e1e1e1;
+}
+
 .filters-filter {
   margin: 1rem .5rem;
   display: flex;
