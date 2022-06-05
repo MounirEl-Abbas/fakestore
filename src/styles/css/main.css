@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.products-page {
+  display: flex;
+}
+
+.products-page aside {
+  width: 20%;
+}
+
+.products-page section {
+  width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-card {
+  width: 200px;
+}
+
+.filters-filter {
+  margin: 1rem .5rem;
+  display: flex;
+  flex-flow: column nowrap;
+}

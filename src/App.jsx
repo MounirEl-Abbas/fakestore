@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import "./styles/css/main.css";
+
 //React Router v6
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -7,7 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Products from "./pages/Products";
-import Product from "./pages/Product";
+import Product from "./components/Product";
 import Cart from "./pages/Cart";
 
 //Components
