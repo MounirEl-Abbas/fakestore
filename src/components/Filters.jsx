@@ -5,6 +5,7 @@ import {
   switchLayout,
   sortProducts,
   filterByCategory,
+  filterByPrice,
   clearFilters,
 } from "../features/products/productsSlice";
 
@@ -76,6 +77,18 @@ const Filters = () => {
             value="electronics">
             Electronics
           </button>
+        </div>
+        <div className="price-filter">
+          <p>{price}</p>
+
+          <input
+            type="range"
+            name="price"
+            min={0}
+            max={999.99}
+            value={price}
+            onChange={e => dispatch(filterByPrice(e.target.value))}
+          />
         </div>
         <button onClick={() => dispatch(clearFilters())}>Clear Filters</button>
       </div>

@@ -65,12 +65,15 @@ const productsSlice = createSlice({
     filterByCategory: (state, action) => {
       state.filters.category = action.payload;
     },
+    filterByPrice: (state, action) => {
+      state.filters.price = action.payload;
+    },
     clearFilters: state => {
       state.filters.search = "";
       state.filters.defaultView = true;
       state.filters.sortBy = "hidden-placeholder";
       state.filters.category = "all";
-      state.filters.price = "999.99";
+      state.filters.price = 999.99;
       state.filters.rating = "all";
     },
   },
@@ -93,6 +96,7 @@ export const {
   switchLayout,
   sortProducts,
   filterByCategory,
+  filterByPrice,
   clearFilters,
 } = productsSlice.actions;
 
@@ -100,12 +104,7 @@ export default productsSlice.reducer;
 
 /* 
 
-- Category
-    >All
-    >Men's clothing
-    >Women's clothing
-    >Jewelery
-    >Electronics
+
 -Price
     >Progress bar
 -Rating

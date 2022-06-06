@@ -31,6 +31,10 @@ const Products = () => {
     );
   }
 
+  filteredProducts = filteredProducts.filter(
+    product => product.price < products.filters.price
+  );
+
   return (
     <div className="products-page">
       <aside>
