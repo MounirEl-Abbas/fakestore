@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  allProductsList: [],
   productsList: [],
   isLoading: true,
   filters: {
@@ -10,7 +9,7 @@ const initialState = {
     defaultView: true,
     sortBy: "hidden-placeholder",
     category: "all",
-    price: "999.99",
+    price: 999.99,
     rating: "all",
   },
 };
@@ -35,22 +34,10 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     filterBySearch: (state, action) => {
-      //Get the search input
       state.filters.search = action.payload;
-
-      //If empty (after backspacing)  - show all products
-      if (action.payload === "") {
-        state.productsList = state.allProductsList;
-        return;
-      }
-      //otherwise, filter allProductsList based on (Search Input vs Product Title)
-      state.productsList = state.allProductsList.filter(product =>
-        product.title.toUpperCase().includes(state.filters.search.toUpperCase())
-      );
     },
     switchLayout: (state, action) => {
       let layoutOption = action.payload;
-      console.log("layoutOption", layoutOption);
       if (layoutOption === "default") {
         state.filters.defaultView = true;
       }
@@ -61,37 +48,22 @@ const productsSlice = createSlice({
     sortProducts: (state, action) => {
       state.filters.sortBy = action.payload;
       let sortType = action.payload;
+
       if (sortType === "name-az") {
-        state.allProductsList.sort((a, b) => a.title.localeCompare(b.title));
         state.productsList.sort((a, b) => a.title.localeCompare(b.title));
       }
       if (sortType === "name-za") {
-        state.allProductsList.sort((a, b) => b.title.localeCompare(a.title));
         state.productsList.sort((a, b) => b.title.localeCompare(a.title));
       }
       if (sortType === "price-low") {
-        state.allProductsList.sort((a, b) => a.price - b.price);
         state.productsList.sort((a, b) => a.price - b.price);
       }
       if (sortType === "price-high") {
-        state.allProductsList.sort((a, b) => b.price - a.price);
         state.productsList.sort((a, b) => b.price - a.price);
       }
     },
     filterByCategory: (state, action) => {
-      let categorySelected = action.payload;
-      console.log("action.payload", action.payload);
-      if (categorySelected === "all") {
-        state.productsList.filter(product => product.category);
-      }
-      if (categorySelected === "men's clothing") {
-      }
-      if (categorySelected === "women's clothing") {
-      }
-      if (categorySelected === "jewelery") {
-      }
-      if (categorySelected === "electronics") {
-      }
+      state.filters.category = action.payload;
     },
     clearFilters: state => {
       state.filters.search = "";
@@ -100,7 +72,6 @@ const productsSlice = createSlice({
       state.filters.category = "all";
       state.filters.price = "999.99";
       state.filters.rating = "all";
-      state.productsList = state.allProductsList;
     },
   },
   extraReducers: {
@@ -109,8 +80,7 @@ const productsSlice = createSlice({
     },
     [getProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.allProductsList = action.payload;
-      state.productsList = state.allProductsList;
+      state.productsList = action.payload;
     },
     [getProducts.rejected]: state => {
       state.isLoading = false;
