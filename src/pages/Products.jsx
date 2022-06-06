@@ -4,11 +4,7 @@ import Filters from "../components/Filters";
 import Product from "../components/Product";
 
 const Products = () => {
-  const {
-    productsList,
-    isLoading,
-    filters: { showFiltered, filteredList },
-  } = useSelector(store => store.products);
+  const { productsList, isLoading } = useSelector(store => store.products);
 
   if (isLoading) {
     return <div>Loading</div>;
@@ -20,13 +16,9 @@ const Products = () => {
         <Filters />
       </aside>
       <section className="products-container">
-        {showFiltered
-          ? filteredList.map(product => (
-              <Product key={product.id} {...product} />
-            ))
-          : productsList.map(product => (
-              <Product key={product.id} {...product} />
-            ))}
+        {productsList.map(product => (
+          <Product key={product.id} {...product} />
+        ))}
       </section>
     </div>
   );

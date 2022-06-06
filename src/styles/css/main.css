@@ -36,6 +36,12 @@ body {
   background-color: #e1e1e1;
 }
 
+.filters {
+  /*  &-layout {
+    
+  } */
+}
+
 .filters-filter {
   margin: 1rem .5rem;
   display: flex;

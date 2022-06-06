@@ -2,11 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
+  allProductsList: [],
   productsList: [],
   isLoading: true,
   filters: {
-    showFiltered: false,
-    filteredList: [],
     search: "",
     defaultView: true,
     sortBy: "price-low",
@@ -41,15 +40,14 @@ const productsSlice = createSlice({
 
       //If empty (after backspacing)  - show all products
       if (action.payload === "") {
-        state.filters.showFiltered = false;
+        console.log("now");
+        state.productsList = state.allProductsList;
         return;
       }
-      //otherwise, filter productsList based on (Search Input vs Product Title)
-      state.filters.filteredList = state.productsList.filter(product =>
+      //otherwise, filter allProductsList based on (Search Input vs Product Title)
+      state.productsList = state.allProductsList.filter(product =>
         product.title.toUpperCase().includes(state.filters.search.toUpperCase())
       );
-      //Then show the filteredList
-      state.filters.showFiltered = true;
     },
     switchLayout: (state, action) => {
       let layoutOption = action.payload;
@@ -61,6 +59,26 @@ const productsSlice = createSlice({
         state.filters.defaultView = false;
       }
     },
+    sortProducts: (state, action) => {
+      state.filters.sortBy = action.payload;
+      let sortType = action.payload;
+      if (sortType === "name-az") {
+        state.allProductsList.sort((a, b) => a.title.localeCompare(b.title));
+        state.productsList.sort((a, b) => a.title.localeCompare(b.title));
+      }
+      if (sortType === "name-za") {
+        state.allProductsList.sort((a, b) => b.title.localeCompare(a.title));
+        state.productsList.sort((a, b) => b.title.localeCompare(a.title));
+      }
+      if (sortType === "price-low") {
+        state.productsList.sort((a, b) => a.price - b.price);
+        state.allProductsList.sort((a, b) => a.price - b.price);
+      }
+      if (sortType === "price-high") {
+        state.allProductsList.sort((a, b) => b.price - a.price);
+        state.productsList.sort((a, b) => b.price - a.price);
+      }
+    },
   },
   extraReducers: {
     [getProducts.pending]: state => {
@@ -68,7 +86,8 @@ const productsSlice = createSlice({
     },
     [getProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.productsList = action.payload;
+      state.allProductsList = action.payload;
+      state.productsList = state.allProductsList;
     },
     [getProducts.rejected]: state => {
       state.isLoading = false;
@@ -76,7 +95,8 @@ const productsSlice = createSlice({
   },
 });
 
-export const { filterBySearch, switchLayout } = productsSlice.actions;
+export const { filterBySearch, switchLayout, sortProducts } =
+  productsSlice.actions;
 
 export default productsSlice.reducer;
 

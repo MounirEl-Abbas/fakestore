@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   filterBySearch,
   switchLayout,
+  sortProducts,
 } from "../features/products/productsSlice";
 
 const Filters = () => {
@@ -32,7 +33,13 @@ const Filters = () => {
           onClick={e => dispatch(switchLayout(e.target.value))}>
           Default
         </button>
-        <select name="sort-by" id="sort-by">
+        <select
+          name="sort-by"
+          id="sort-by"
+          onChange={e => dispatch(sortProducts(e.target.value))}>
+          <option value="" selected disabled hidden>
+            Select Sort Type
+          </option>
           <option value="price-low">Price (Lowest)</option>
           <option value="price-high">Price (Highest)</option>
           <option value="name-az">Name (A - Z)</option>
