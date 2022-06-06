@@ -8,7 +8,7 @@ const initialState = {
   filters: {
     search: "",
     defaultView: true,
-    sortBy: "price-low",
+    sortBy: "hidden-placeholder",
     category: "all",
     price: "999.99",
     rating: "all",
@@ -40,7 +40,6 @@ const productsSlice = createSlice({
 
       //If empty (after backspacing)  - show all products
       if (action.payload === "") {
-        console.log("now");
         state.productsList = state.allProductsList;
         return;
       }
@@ -71,13 +70,37 @@ const productsSlice = createSlice({
         state.productsList.sort((a, b) => b.title.localeCompare(a.title));
       }
       if (sortType === "price-low") {
-        state.productsList.sort((a, b) => a.price - b.price);
         state.allProductsList.sort((a, b) => a.price - b.price);
+        state.productsList.sort((a, b) => a.price - b.price);
       }
       if (sortType === "price-high") {
         state.allProductsList.sort((a, b) => b.price - a.price);
         state.productsList.sort((a, b) => b.price - a.price);
       }
+    },
+    filterByCategory: (state, action) => {
+      let categorySelected = action.payload;
+      console.log("action.payload", action.payload);
+      if (categorySelected === "all") {
+        state.productsList.filter(product => product.category);
+      }
+      if (categorySelected === "men's clothing") {
+      }
+      if (categorySelected === "women's clothing") {
+      }
+      if (categorySelected === "jewelery") {
+      }
+      if (categorySelected === "electronics") {
+      }
+    },
+    clearFilters: state => {
+      state.filters.search = "";
+      state.filters.defaultView = true;
+      state.filters.sortBy = "hidden-placeholder";
+      state.filters.category = "all";
+      state.filters.price = "999.99";
+      state.filters.rating = "all";
+      state.productsList = state.allProductsList;
     },
   },
   extraReducers: {
@@ -95,18 +118,18 @@ const productsSlice = createSlice({
   },
 });
 
-export const { filterBySearch, switchLayout, sortProducts } =
-  productsSlice.actions;
+export const {
+  filterBySearch,
+  switchLayout,
+  sortProducts,
+  filterByCategory,
+  clearFilters,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;
 
 /* 
-- Grid / default view
-- Sort by 
-    >Name (a-z)
-    >Name (z-a)
-    >Price (highest)
-    >Price (lowest)
+
 - Category
     >All
     >Men's clothing

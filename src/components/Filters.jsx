@@ -4,6 +4,8 @@ import {
   filterBySearch,
   switchLayout,
   sortProducts,
+  filterByCategory,
+  clearFilters,
 } from "../features/products/productsSlice";
 
 const Filters = () => {
@@ -36,8 +38,9 @@ const Filters = () => {
         <select
           name="sort-by"
           id="sort-by"
+          defaultValue="hidden-placeholder"
           onChange={e => dispatch(sortProducts(e.target.value))}>
-          <option value="" selected disabled hidden>
+          <option value="hidden-placeholder" disabled hidden>
             Select Sort Type
           </option>
           <option value="price-low">Price (Lowest)</option>
@@ -47,7 +50,34 @@ const Filters = () => {
         </select>
       </div>
       <div className="filters-filter">
-        <button>Clear Filters</button>
+        <div className="categories">
+          <button
+            onClick={e => dispatch(filterByCategory(e.target.value))}
+            value="all">
+            All
+          </button>
+          <button
+            onClick={e => dispatch(filterByCategory(e.target.value))}
+            value="men's clothing">
+            Men's Clothing
+          </button>
+          <button
+            onClick={e => dispatch(filterByCategory(e.target.value))}
+            value="women's clothing">
+            Women's Clothing
+          </button>
+          <button
+            onClick={e => dispatch(filterByCategory(e.target.value))}
+            value="jewelery">
+            Jewelery
+          </button>
+          <button
+            onClick={e => dispatch(filterByCategory(e.target.value))}
+            value="electronics">
+            Electronics
+          </button>
+        </div>
+        <button onClick={() => dispatch(clearFilters())}>Clear Filters</button>
       </div>
     </div>
   );
