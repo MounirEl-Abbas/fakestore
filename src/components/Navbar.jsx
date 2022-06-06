@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const { amount } = useSelector(store => store.cart);
   return (
     <nav style={{ display: "flex" }}>
       <div>Logo</div>
@@ -12,6 +14,7 @@ const Navbar = () => {
       </div>
       <div>
         <Link to="/cart">Cart</Link>
+        ##{amount}
       </div>
     </nav>
   );

@@ -1,14 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem } from "../features/cart/cartSlice";
+const Product = ({ product }) => {
+  const {
+    id,
+    title,
+    price,
+    description,
+    category,
+    image,
+    rating: { rate, count },
+  } = product;
 
-const Product = ({
-  title,
-  price,
-  description,
-  category,
-  image,
-  rating: { rate, count },
-}) => {
+  const dispatch = useDispatch();
   const {
     filters: { defaultView },
   } = useSelector(store => store.products);
@@ -17,7 +21,8 @@ const Product = ({
       className={`${
         defaultView ? "product-card default-layout" : "product-card grid-layout"
       }`}
-      style={{ border: "1px solid red" }}>
+      style={{ border: "1px solid red" }}
+      onClick={e => dispatch(addItem(product))}>
       <h3>{title}</h3>
       <p>{price}</p>
       <p>{description}</p>

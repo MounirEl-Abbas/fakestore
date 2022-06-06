@@ -45,7 +45,7 @@ const Products = () => {
           <h3>Sorry, no products matched your search criteria.</h3>
         ) : (
           filteredProducts.map(product => (
-            <Product key={product.id} {...product} />
+            <Product key={product.id} product={product} />
           ))
         )}
       </section>
